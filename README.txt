@@ -1,29 +1,16 @@
-PROGRAM WARDROBE V4.0 — PWA PACKAGE
+PROGRAM WARDROBE V4.0 — ANDROID PROJECT
 
-This is the web-app version of Program Wardrobe V4.0.
-It is a website/PWA project, not an APK.
+This is the Android Studio/Gradle project source for a native Android WebView wrapper around the V4.0 app.
 
-WHAT'S INCLUDED
-- index.html: the app interface and features
-- manifest.json: installable web-app settings
-- sw.js: offline cache support
-- icons/: app icons
+BUILD ON A COMPUTER:
+1. Install Android Studio.
+2. Open this project folder.
+3. Allow Gradle sync to complete.
+4. Build > Build Bundle(s) / APK(s) > Build APK(s).
+5. Install app/build/outputs/apk/debug/app-debug.apk on your phone.
 
-IMPORTANT
-For the install prompt and offline support to work, host these files on an HTTPS website.
-Opening index.html directly from the phone's file manager is useful for a quick test, but PWA installation/service workers require HTTPS (or localhost).
+PHONE-ONLY OPTION:
+You need an Android IDE/build environment that supports importing Gradle Android projects. Import this project ZIP there, sync, and build a debug APK. Compatibility varies by app.
 
-EASIEST PHONE-FRIENDLY ROUTE: GITHUB PAGES
-1. Sign in to https://github.com/ and create a new public repository named program-wardrobe.
-2. Upload the CONTENTS of this folder (index.html, manifest.json, sw.js, and icons folder) to the repository root.
-3. Open the repository's Settings -> Pages.
-4. Under Build and deployment, choose Deploy from a branch, select main and /(root), then Save.
-5. Wait for GitHub Pages to publish the site. Open the published HTTPS URL in Chrome on Android.
-6. In Chrome, tap ⋮ and choose Install app or Add to Home screen.
-
-DATA / BACKUPS
-- Programs are stored in the browser's local storage on that device/browser.
-- Use Settings -> Export Backup regularly. Import the JSON backup if you switch browsers or devices.
-- Hosting the app does not automatically sync your programs between devices.
-
-If GitHub's mobile interface looks different, use the repository's Add file -> Upload files option and upload the four items/folder contents.
+The app interface is in app/src/main/assets/index.html. Data is stored in the app's local WebView storage. Export a backup from Settings before uninstalling or clearing app data.
+This ZIP contains project source, NOT a compiled APK.

@@ -1,0 +1,338 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Universe</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #03020d;
+  color: white;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+#stars {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.screen {
+  min-height: 100vh;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+  text-align: center;
+}
+
+.screen.active {
+  display: flex;
+}
+
+h1 {
+  font-size: clamp(2.2rem, 10vw, 4rem);
+  background: linear-gradient(90deg, #80dfff, #c49bff, #ff8be7);
+  color: transparent;
+  background-clip: text;
+  margin-bottom: 18px;
+}
+
+p {
+  color: #c3bddf;
+  line-height: 1.7;
+  max-width: 420px;
+}
+
+button {
+  border: 1px solid #9b83ff;
+  border-radius: 30px;
+  padding: 13px 24px;
+  margin: 12px 5px;
+  background: #17112e;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: 0 0 18px #7953ff33;
+}
+
+button:active {
+  transform: scale(.96);
+}
+
+.portal {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 3px solid #c8a1ff;
+  margin: 35px;
+  background: radial-gradient(
+    circle,
+    #ffb5fa33,
+    #8c56ff33,
+    transparent 70%
+  );
+  box-shadow:
+    0 0 25px #a15cff,
+    inset 0 0 35px #8d50ff;
+  animation: portal 3s infinite alternate;
+}
+
+@keyframes portal {
+  from {
+    transform: scale(.94) rotate(0deg);
+    box-shadow: 0 0 20px #9d63ff;
+  }
+  to {
+    transform: scale(1.06) rotate(12deg);
+    box-shadow: 0 0 55px #ed83ff;
+  }
+}
+
+.planets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  justify-content: center;
+  margin-top: 35px;
+  max-width: 500px;
+}
+
+.planet {
+  width: 115px;
+  height: 115px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 43px;
+  cursor: pointer;
+  border: 1px solid #ffffff44;
+  box-shadow: 0 0 28px #9d63ff33;
+  transition: .3s;
+}
+
+.planet:active {
+  transform: scale(.9);
+}
+
+.planet:nth-child(1) {
+  background: radial-gradient(circle at 30% 25%, #8eeaff, #3548a6 65%, #11112c);
+}
+
+.planet:nth-child(2) {
+  background: radial-gradient(circle at 30% 25%, #ffc1e7, #9c398e 65%, #29102f);
+}
+
+.planet:nth-child(3) {
+  background: radial-gradient(circle at 30% 25%, #ffe6a1, #c46b37 65%, #371c3c);
+}
+
+input {
+  width: min(270px, 90%);
+  padding: 13px;
+  margin-top: 20px;
+  border: 1px solid #8e70d9;
+  border-radius: 12px;
+  color: white;
+  background: #100c22;
+  text-align: center;
+  font-size: 17px;
+}
+
+#feedback {
+  margin-top: 16px;
+  min-height: 26px;
+  color: #e2baff;
+}
+
+.small {
+  color: #77718f;
+  font-size: 12px;
+  margin-top: 25px;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="stars"></canvas>
+
+<section id="home" class="screen active">
+  <p>✦ AN UNKNOWN REALITY ✦</p>
+  <h1>Digital Universe</h1>
+  <p>
+    Somewhere beyond the stars, a world is waiting
+    to be discovered. Will you enter?
+  </p>
+  <div class="portal"></div>
+  <button onclick="showScreen('universe')">
+    ENTER THE UNIVERSE ↗
+  </button>
+  <p class="small">VERSION 1.0 · YOUR JOURNEY BEGINS HERE</p>
+</section>
+
+<section id="universe" class="screen">
+  <p>LOCATION: UNKNOWN</p>
+  <h1>The Lost Galaxy</h1>
+  <p>
+    Three worlds are hidden among the stars.
+    Each holds a fragment of a greater mystery.
+  </p>
+
+  <div class="planets">
+    <div>
+      <div class="planet" onclick="explore(0)">🌊</div>
+      <p>Planet Echo</p>
+    </div>
+    <div>
+      <div class="planet" onclick="explore(1)">🌙</div>
+      <p>Moonveil</p>
+    </div>
+    <div>
+      <div class="planet" onclick="explore(2)">🔥</div>
+      <p>Ember</p>
+    </div>
+  </div>
+
+  <p id="feedback">Choose a world to explore.</p>
+  <button onclick="showScreen('code')">ENTER SECRET CODE</button>
+  <button onclick="showScreen('home')">← HOME</button>
+</section>
+
+<section id="planet" class="screen">
+  <p>TRANSMISSION RECEIVED</p>
+  <h1 id="planetTitle">Unknown World</h1>
+  <p id="planetText"></p>
+  <button onclick="showScreen('universe')">RETURN TO GALAXY</button>
+</section>
+
+<section id="code" class="screen">
+  <p>CLASSIFIED TRANSMISSION</p>
+  <h1>Secret Gateway</h1>
+  <p>
+    Every universe has a key.
+    Find the correct code to unlock the hidden truth.
+  </p>
+  <input id="secretInput" placeholder="Enter the secret code">
+  <br>
+  <button onclick="unlock()">UNLOCK</button>
+  <p id="codeFeedback"></p>
+  <button onclick="showScreen('universe')">GO BACK</button>
+</section>
+
+<section id="ending" class="screen">
+  <p>TRANSMISSION DECODED</p>
+  <h1>The Hidden Truth</h1>
+  <p>
+    You searched the stars for something extraordinary.
+    But the greatest discovery is the curiosity that
+    brought you here in the first place.
+  </p>
+  <p style="margin-top:25px">✦ END OF CHAPTER ONE ✦</p>
+  <button onclick="showScreen('home')">EXPERIENCE AGAIN</button>
+</section>
+
+<script>
+const screens = document.querySelectorAll(".screen");
+
+function showScreen(id) {
+  screens.forEach(s => s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+const worlds = [
+  {
+    title: "Planet Echo",
+    text: "Ocean waves carry a voice from a forgotten civilization. It whispers: 'The stars remember everything.'"
+  },
+  {
+    title: "Moonveil",
+    text: "A silver moon floats above a silent city. An ancient message appears: 'Not every mystery wants to stay hidden.'"
+  },
+  {
+    title: "Ember",
+    text: "Beneath glowing crimson skies, a crystal reveals a message: 'The journey matters more than the destination.'"
+  }
+];
+
+function explore(index) {
+  document.getElementById("planetTitle").textContent =
+    worlds[index].title;
+
+  document.getElementById("planetText").textContent =
+    worlds[index].text;
+
+  showScreen("planet");
+}
+
+// Secret code: STARLIGHT
+function unlock() {
+  const value = document.getElementById("secretInput")
+    .value.trim().toUpperCase();
+
+  if (value === "STARLIGHT") {
+    showScreen("ending");
+  } else {
+    document.getElementById("codeFeedback").textContent =
+      "Access denied. Hint: something that shines in the dark...";
+  }
+}
+
+// Animated starfield
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
+let stars = [];
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  stars = Array.from({ length: 130 }, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 1.5 + .3,
+    speed: Math.random() * .35 + .08
+  }));
+}
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  for (const s of stars) {
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(210,190,255,0.8)";
+    ctx.fill();
+
+    s.y -= s.speed;
+
+    if (s.y < 0) {
+      s.y = canvas.height;
+      s.x = Math.random() * canvas.width;
+    }
+  }
+
+  requestAnimationFrame(animate);
+}
+
+window.addEventListener("resize", resize);
+resize();
+animate();
+</script>
+
+</body>
+</html>
